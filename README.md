@@ -12,3 +12,7 @@ Extrae el ZIP y sube **todos** los archivos a la raíz del repositorio `Anima`, 
 
 ## Aviso
 El atlas y los encuentros son herramientas narrativas originales, no reglas oficiales de Anima. No se redistribuyen manuales.
+
+
+## Alfa 0.4 — Mesa de juego
+Seguimiento manual de participantes, iniciativa, asaltos, vitalidad y notas. Incluido en guardado automático, archivo de partidas y exportación/importación JSON v2. No implementa las fórmulas oficiales de combate. Conserva los iconos en `icons/`.

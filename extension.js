@@ -3,6 +3,9 @@ const vaultKey='anima_gaia_vault_v2';
 const getVault=()=>{try{const v=JSON.parse(localStorage.getItem(vaultKey)||'{}');return v&&typeof v==='object'&&!Array.isArray(v)?v:{}}catch{return {}}};
 function storeVault(v){localStorage.setItem(vaultKey,JSON.stringify(v))}
 function records(v){return Array.isArray(v)?v.slice(0,60).filter(x=>x&&typeof x==='object').map(x=>({name:String(x.name||'').slice(0,70),note:String(x.note||'').slice(0,500)})).filter(x=>x.name):[]}
+function safeRound(v){const n=Number(v);return Number.isInteger(n)&&n>=1&&n<=9999?n:1}
+function safeFighters(v){return Array.isArray(v)?v.slice(0,30).filter(x=>x&&typeof x==='object').map(x=>({id:String(x.id||'').slice(0,80),name:String(x.name||'').slice(0,55),initiative:bounded(x.initiative,-999,999,0),hp:bounded(x.hp,0,99999,0),max:bounded(x.max,1,99999,100)})).filter(x=>x.name):[]}
+function bounded(v,min,max,fallback){const n=Number(v);return Number.isFinite(n)?Math.max(min,Math.min(max,Math.trunc(n))):fallback}
 function safeState(v){
  if(!v||typeof v!=='object'||Array.isArray(v))throw Error('Formato de partida inválido');
  const values=v.values===null||v.values===undefined?null:v.values;
@@ -10,7 +13,7 @@ function safeState(v){
  const scene=Number(v.scene??-1);
  if(!Number.isInteger(scene)||scene < -1||scene>=scenes.length)throw Error('Escena desconocida');
  const arr=(x,max)=>Array.isArray(x)?x.slice(0,max).filter(y=>typeof y==='string').map(y=>y.slice(0,120)):[];
- return {name:String(v.name||'').slice(0,40),concept:String(v.concept||'Viajero errante').slice(0,60),category:String(v.category||'Guerrero').slice(0,60),values:values?values.slice():null,scene,log:Array.isArray(v.log)?v.log.slice(-70).filter(x=>x&&typeof x.text==='string').map(x=>({text:x.text.slice(0,900),system:!!x.system})):[],journal:String(v.journal||'').slice(0,15000),inventory:arr(v.inventory,80),quests:arr(v.quests,80),completed:Array.isArray(v.completed)?v.completed.slice(0,80).map(Boolean):[],npcs:records(v.npcs),places:records(v.places)};
+ return {name:String(v.name||'').slice(0,40),concept:String(v.concept||'Viajero errante').slice(0,60),category:String(v.category||'Guerrero').slice(0,60),values:values?values.slice():null,scene,log:Array.isArray(v.log)?v.log.slice(-70).filter(x=>x&&typeof x.text==='string').map(x=>({text:x.text.slice(0,900),system:!!x.system})):[],journal:String(v.journal||'').slice(0,15000),inventory:arr(v.inventory,80),quests:arr(v.quests,80),completed:Array.isArray(v.completed)?v.completed.slice(0,80).map(Boolean):[],npcs:records(v.npcs),places:records(v.places),fighters:safeFighters(v.fighters),round:safeRound(v.round),battleNotes:String(v.battleNotes||'').slice(0,4000)};
 }
 function redrawExtra(){
  $('category').value=Array.from($('category').options).some(o=>o.value===state.category)?state.category:'Guerrero';
@@ -18,7 +21,7 @@ function redrawExtra(){
   const ul=$(id);ul.replaceChildren();(state[field]||[]).forEach((name,i)=>{
    const li=document.createElement('li');if(id==='quests'&&state.completed?.[i])li.className='done';
    const span=document.createElement('span');span.textContent=name;li.append(span);
-   if(id==='quests'){const done=document.createElement('button');done.textContent=state.completed?.[i]?'Reabrir':'Completar';done.onclick=()=>{state.completed[i]=!state.completed[i];redrawExtra();if(typeof redrawWorldbook==='function')redrawWorldbook();persist()};li.append(done)}
+   if(id==='quests'){const done=document.createElement('button');done.textContent=state.completed?.[i]?'Reabrir':'Completar';done.onclick=()=>{state.completed[i]=!state.completed[i];redrawExtra();if(typeof redrawWorldbook==='function')redrawWorldbook();if(typeof redrawTabletop==='function')redrawTabletop();persist()};li.append(done)}
    const remove=document.createElement('button');remove.textContent='Quitar';remove.setAttribute('aria-label','Quitar '+name);remove.onclick=()=>{state[field].splice(i,1);if(field==='quests')state.completed.splice(i,1);redrawExtra();if(typeof redrawWorldbook==='function')redrawWorldbook();persist()};li.append(remove);ul.append(li)
   });
  }
