@@ -1,18 +1,14 @@
-# Anima — Chronicles of Gaia · Alfa 0.3
+# Anima — Chronicles of Gaia · Alfa 0.5
 
 ## Novedades
-- Atlas de campaña: PNJ y lugares con notas persistentes.
-- Generador de encuentros narrativos con tiradas visibles.
-- Los registros se guardan con la partida y se incluyen en exportación/importación JSON.
-- Compatible con partidas anteriores: los registros nuevos comienzan vacíos.
-- Caché PWA renovada para descargar `worldbook.js`.
+- Santuario de héroes: hasta 25 instantáneas independientes con estadísticas y estado completo.
+- Restauración individual con confirmación.
+- Exportación de cada instantánea en formato compatible con Importar JSON (version 2).
+- Descarga de respaldo completo: partida activa, archivo de partidas e instantáneas. **El respaldo completo es un archivo de seguridad y no se puede importar directamente desde el botón Importar JSON de partida.**
+- Protección automática antes de regenerar características o empezar una nueva partida.
 
-## Instalación en GitHub Pages
-Extrae el ZIP y sube **todos** los archivos a la raíz del repositorio `Anima`, conservando `icons/` con los dos PNG. No subas el ZIP como un único archivo. Si ya instalaste la PWA, abre la app con conexión y actualiza; puede necesitar cerrarse y abrirse de nuevo para activar el service worker nuevo.
+## Actualización
+Sube todos los archivos a la raíz de GitHub Pages, conservando icons/ y agregando safeguard.js. No borres los datos de la app. Antes de actualizar, conserva el JSON que ya exportaste.
 
-## Aviso
-El atlas y los encuentros son herramientas narrativas originales, no reglas oficiales de Anima. No se redistribuyen manuales.
-
-
-## Alfa 0.4 — Mesa de juego
-Seguimiento manual de participantes, iniciativa, asaltos, vitalidad y notas. Incluido en guardado automático, archivo de partidas y exportación/importación JSON v2. No implementa las fórmulas oficiales de combate. Conserva los iconos en `icons/`.
+## Limitaciones
+Las instantáneas están en localStorage: si borras los datos del sitio o desinstalas y limpias almacenamiento, podrían perderse. Descarga copias externas. Las herramientas narrativas no implementan aún todas las reglas oficiales de Anima.
