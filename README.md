@@ -1,23 +1,20 @@
-# Anima — Chronicles of Gaia · Alfa 0.1
+# Anima — Chronicles of Gaia · Alfa 0.2.1 PWA
 
-Prototipo web estático para un jugador, en español. Funciona sin servidor ni claves API.
+Esta entrega contiene **todos los archivos** de la Alfa 0.2 más los necesarios para instalar la web como aplicación Android/Chrome.
 
-## Instalación en GitHub Pages
+## Publicación
 
-1. Descomprime el ZIP.
-2. Sube `index.html`, `styles.css` y `app.js` a la raíz de un repositorio de GitHub.
-3. Activa Settings → Pages → Deploy from a branch → main → / (root).
-4. Abre la dirección publicada. También funciona abriendo `index.html` localmente.
+1. Extrae el ZIP y sube **todo el contenido de esta carpeta**, incluida la carpeta `icons`, a la **raíz del mismo repositorio** de GitHub Pages.
+2. Espera a que termine la publicación de GitHub Pages.
+3. Abre la URL pública con Chrome (no desde una vista integrada en otra app), actualiza la página y espera unos segundos.
+4. En el menú ⋮ de Chrome, selecciona **Instalar aplicación**. Si Chrome sigue mostrando solo "Crear acceso directo", vuelve a abrir la URL, verifica que los archivos estén publicados y prueba tras cerrar/reabrir la pestaña.
 
-## Alcance y fidelidad
+## Qué cambia
 
-Verificado contra el manual aportado **Core Exxet, edición revisada**: ocho características primarias; método de generación Tipo I; D100 con tirada abierta inicial 90+, umbral progresivo, 100 siempre abierto; pifia base 1–3; controles de habilidad D100 + habilidad final. **No es todavía un motor completo de Anima**. El tratamiento de maestría, resistencia, críticos y restricciones adicionales no está integrado. Los umbrales seleccionados por el usuario y las escenas de ficción son demostrativos y no deben confundirse con tablas o material oficial. La prueba del prólogo usa un valor de habilidad manual, no una ficha validada.
+- `manifest.webmanifest`: nombre, identidad visual, inicio y modo independiente.
+- `icons/icon-192.png` y `icons/icon-512.png`: iconos locales.
+- `sw.js`: cachea los recursos básicos para carga sin conexión tras la primera visita.
+- `pwa.js`: registra el service worker.
+- `index.html`: incluye referencias al manifiesto e iconos.
 
-No hay IA generativa: la narración es una aventura ramificada local. El guardado es localStorage (mismo navegador/dispositivo). No se incluye texto, arte ni tablas extensas de los libros protegidos por copyright.
-
-## Próximas fases
-
-1. Auditoría de las siete fuentes y matriz de reglas y suplementos.
-2. Creación de personaje completa: categoría, PD, habilidades, ventajas, equipo y cálculos.
-3. Combate completo y módulos sobrenaturales (Ki, magia, convocación, psíquica).
-4. Director de juego generativo con backend seguro, validación determinista y persistencia robusta.
+**Importante:** No elimina ni migra datos de `localStorage`; si mantienes la misma URL y navegador, tus partidas deberían permanecer. Exporta JSON como copia de seguridad antes de actualizar. Las funciones de juego siguen siendo las de Alfa 0.2, sin nuevas reglas. La instalación depende de Chrome y de que el sitio esté servido por HTTPS (GitHub Pages lo permite). No se garantiza instalación en todos los dispositivos o configuraciones.
